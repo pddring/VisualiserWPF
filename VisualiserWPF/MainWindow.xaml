@@ -5,8 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisualiserWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800" Closing="Window_Closing">
+    <Window.Resources>
+        <RoutedUICommand x:Key="ChooseCam0" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>CTRL+0</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="RotateLeft" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Left</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="RotateRight" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Right</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="RotateUp" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Up</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="RotateDown" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Down</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="Quit" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Ctrl+Q</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="ResetView" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Alt+D0</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+    </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource ChooseCam0}" Executed="Camera_Choose_Camera"/>
+        <CommandBinding Command="{StaticResource RotateLeft}" Executed="RotateLeft"/>
+        <CommandBinding Command="{StaticResource RotateRight}" Executed="RotateRight"/>
+        <CommandBinding Command="{StaticResource RotateUp}" Executed="RotateUp"/>
+        <CommandBinding Command="{StaticResource RotateDown}" Executed="RotateDown"/>
+        <CommandBinding Command="{StaticResource Quit}" Executed="Quit"/>
+        <CommandBinding Command="{StaticResource ResetView}" Executed="ResetView"/>
+    </Window.CommandBindings>
+    
+    
+    <DockPanel>
+    
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit" Command="{StaticResource Quit}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Camera">
+                <MenuItem Header="Choose Camera" Command="{StaticResource ChooseCam0}"></MenuItem>
+                <MenuItem Header="Reset Pan / View / Scale" Command="{StaticResource ResetView}"></MenuItem>
+            </MenuItem>
+            
+            
+            
         
-    </Grid>
+        </Menu>
+        
+        <Label DockPanel.Dock="Bottom" Content="" Name="lblStatus"/>
+        
+        <Image Panel.ZIndex="-1"  Name="imgPreview" MouseWheel="imgPreview_MouseWheel" MouseDown="imgPreview_MouseDown" MouseUp="imgPreview_MouseUp" MouseMove="imgPreview_MouseMove"/>
+        
+    </DockPanel>
 </Window>
