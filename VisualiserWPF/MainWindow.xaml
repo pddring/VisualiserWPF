@@ -42,38 +42,78 @@
                 <KeyGesture>Alt+D0</KeyGesture>
             </RoutedUICommand.InputGestures>
         </RoutedUICommand>
+        <RoutedUICommand x:Key="ChooseRemoteCam" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Ctrl+1</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="SetToolPan" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Ctrl+H</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="SetToolAnnotate" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Ctrl+P</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
+        <RoutedUICommand x:Key="ClearAnnotations" Text="Build">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture>Del</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
     </Window.Resources>
 
     <Window.CommandBindings>
         <CommandBinding Command="{StaticResource ChooseCam0}" Executed="Camera_Choose_Camera"/>
+        <CommandBinding Command="{StaticResource ChooseRemoteCam}" Executed="Camera_Choose_Stream"/>
         <CommandBinding Command="{StaticResource RotateLeft}" Executed="RotateLeft"/>
         <CommandBinding Command="{StaticResource RotateRight}" Executed="RotateRight"/>
         <CommandBinding Command="{StaticResource RotateUp}" Executed="RotateUp"/>
         <CommandBinding Command="{StaticResource RotateDown}" Executed="RotateDown"/>
         <CommandBinding Command="{StaticResource Quit}" Executed="Quit"/>
         <CommandBinding Command="{StaticResource ResetView}" Executed="ResetView"/>
+        <CommandBinding Command="{StaticResource SetToolPan}" Executed="SetToolPan"/>
+        <CommandBinding Command="{StaticResource SetToolAnnotate}" Executed="SetToolAnnotate"/>
+        <CommandBinding Command="{StaticResource ClearAnnotations}" Executed="ClearAnnotations"/>
     </Window.CommandBindings>
-    
-    
+
+
     <DockPanel>
-    
+
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Exit" Command="{StaticResource Quit}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Camera">
-                <MenuItem Header="Choose Camera" Command="{StaticResource ChooseCam0}"></MenuItem>
+                <MenuItem Header="Choose Local Camera" Command="{StaticResource ChooseCam0}"></MenuItem>
+                <MenuItem Header="Choose Remote Camera" Command="{StaticResource ChooseRemoteCam}"></MenuItem>
                 <MenuItem Header="Reset Pan / View / Scale" Command="{StaticResource ResetView}"></MenuItem>
             </MenuItem>
-            
-            
-            
-        
+
+
+
+
         </Menu>
+        <StatusBar DockPanel.Dock="Bottom" Height="30">
+            <Label Name="lblStatus"></Label>
+            <Button Content="Pan" Name="btnPan" Command="{StaticResource SetToolPan}"></Button>
+            <Button Content="Annotate" Name="btnAnnotate" Command="{StaticResource SetToolAnnotate}"></Button>
+            <ComboBox Name="ColorBox" VerticalAlignment="Top" Text="Yellow" SelectionChanged="ColorBox_SelectionChanged">
+                <ComboBoxItem Content="Black" HorizontalAlignment="Left"/>
+                <ComboBoxItem Content="Red" HorizontalAlignment="Left"/>
+                <ComboBoxItem Content="White" HorizontalAlignment="Left"/>
+                <ComboBoxItem Content="Yellow" HorizontalAlignment="Left"/>
+            </ComboBox>
+            <Button Content="Clear" Command="{StaticResource ClearAnnotations}"/>
+        </StatusBar>
+
+        <Canvas Name="mainCanvas" Panel.ZIndex="-1" MouseWheel="imgPreview_MouseWheel" MouseDown="imgPreview_MouseDown" MouseUp="imgPreview_MouseUp" MouseMove="imgPreview_MouseMove">
+            <Image Panel.ZIndex="-2" Name="imgPreview"/>
+            <Canvas Name="annotationCanvas"></Canvas>
+        </Canvas>
         
-        <Label DockPanel.Dock="Bottom" Content="" Name="lblStatus"/>
-        
-        <Image Panel.ZIndex="-1"  Name="imgPreview" MouseWheel="imgPreview_MouseWheel" MouseDown="imgPreview_MouseDown" MouseUp="imgPreview_MouseUp" MouseMove="imgPreview_MouseMove"/>
-        
+
+
     </DockPanel>
 </Window>
